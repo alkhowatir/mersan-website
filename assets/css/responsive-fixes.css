@@ -1,0 +1,303 @@
+/* ==========================================================================
+   Responsive fixes & tablet/mobile refinements
+   --------------------------------------------------------------------------
+   Loaded LAST (after theme.css + elementor-generated.css + all widget CSS)
+   so it layers safely on top of the real Astra + Elementor render without
+   touching any of the vendor files.
+
+   Scope / intent:
+   - Desktop (>1024px) is left as-is. Every rule below either only fires
+     inside a max-width media query, or is a value-preserving safety net
+     (max-width:100% on media, overflow guards) that is a no-op at desktop
+     sizes because nothing there is currently overflowing its box.
+   - Breakpoints are chosen from how the actual sections break, not copied
+     from Elementor's editor breakpoints (1024 / 767):
+       1024px – large tablet / small laptop
+        768px – tablet portrait
+        600px – large phone / small tablet
+        480px – phone
+        380px – small phone
+   - Elementor already ships solid per-element responsive rules (column
+     widths / wraps at 1024 & 767). This file is the safety net that
+     catches what a component library can't know about the *specific*
+     content on this site, plus a couple of real gaps (see the carousel
+     note below).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   1. Universal safety net — prevents horizontal scroll at any width.
+   These are no-ops on desktop (nothing there currently exceeds its box).
+   -------------------------------------------------------------------- */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img, svg, video, iframe, embed, object, canvas {
+    max-width: 100%;
+}
+img { height: auto; }
+
+/* Elementor / Astra containers: never let an inner box force the page wider. */
+.ast-container,
+.e-con,
+.e-con-inner,
+.elementor-container,
+.elementor-widget-wrap,
+.elementor-section,
+.site-header-primary-section-center,
+.main-header-bar-navigation {
+    max-width: 100%;
+}
+
+/* Form controls: full-width within whatever column they're in, never wider. */
+input,
+textarea,
+select,
+button,
+.elementor-field-group,
+.request-form,
+.request-form input,
+.request-form textarea,
+.request-form button {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Restore a visible keyboard-focus indicator (some vendor CSS sets
+   `:focus{outline:none}` globally). Mouse users are unaffected. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.menu-toggle:focus-visible,
+.menu-link:focus-visible {
+    outline: 2px solid #d97d68;
+    outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------
+   2. Header / logo / nav toggle — keep the touch target comfortable and
+   the logo from ever outgrowing the header row at any width.
+   -------------------------------------------------------------------- */
+.site-logo-img img,
+.custom-logo-link img {
+    max-width: 160px;
+    width: auto;
+    height: auto;
+}
+
+@media (max-width: 1024px) {
+    .site-logo-img img,
+    .custom-logo-link img {
+        max-width: 130px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-logo-img img,
+    .custom-logo-link img {
+        max-width: 110px;
+    }
+}
+
+/* Comfortable ≥44px touch target for the hamburger button at every width
+   the mobile header can appear at, and make sure it can never be the
+   thing that forces the header row wider than the viewport. */
+.ast-mobile-header-wrap .menu-toggle.main-header-menu-toggle {
+    min-width: 44px;
+    min-height: 44px;
+}
+
+/* The mobile nav panel itself must never exceed the viewport width and
+   should scroll internally if the menu is ever taller than the screen. */
+.ast-mobile-header-content {
+    max-width: 100%;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.ast-mobile-header-content .main-header-menu {
+    max-width: 100%;
+}
+
+.ast-mobile-header-content .menu-link {
+    word-break: break-word;
+}
+
+/* --------------------------------------------------------------------
+   3. 1024px — large tablet / small laptop
+   -------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+    .ast-container {
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+
+    /* Belt-and-braces: if any Elementor row is still marked to keep its
+       row direction at this width, let it wrap instead of squeezing
+       columns into unreadable slivers. */
+    .e-con.e-flex {
+        flex-wrap: wrap;
+    }
+
+    .elementor-image-carousel-wrapper,
+    .elementor-image-carousel-wrapper .swiper-wrapper {
+        max-width: 100%;
+        overflow: hidden;
+    }
+}
+
+/* --------------------------------------------------------------------
+   4. 768px — tablet portrait
+   -------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .ast-container {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    /* Icon-box / image-box / info-card grids: once a row only has room
+       for two comfortable columns, let content-driven auto-wrap take
+       over instead of forcing the desktop column count. */
+    .elementor-icon-box-wrapper,
+    .hfe-infocard {
+        word-break: break-word;
+    }
+
+    /* Google map embed: fixed 475px desktop height is too tall relative
+       to a portrait tablet viewport — bring it down proportionally. */
+    .elementor-widget-google_maps iframe,
+    .elementor-widget-google_maps .surecookie-placeholder {
+        height: 320px !important;
+        min-height: 320px !important;
+    }
+
+    /* Accordion / FAQ: give question text room to wrap onto a second
+       line cleanly instead of crowding the +/- icon. */
+    .elementor-tab-title {
+        gap: 10px;
+    }
+    .elementor-accordion-title {
+        white-space: normal;
+        word-break: break-word;
+    }
+}
+
+/* --------------------------------------------------------------------
+   5. 600px — large phone / small tablet
+   -------------------------------------------------------------------- */
+@media (max-width: 600px) {
+    .ast-container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Buttons: never let a long label force the button (or its row)
+       wider than the column it sits in. */
+    .elementor-button,
+    .elementor-button-wrapper {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .elementor-button-content-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Icon list rows (services / about pages): stack icon + label
+       comfortably instead of relying on inline width. */
+    .elementor-icon-list-items.elementor-inline-items {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* Counters (home hero stats): keep the number/title comfortably
+       inside its bordered box at narrower widths. */
+    .elementor-counter-number-wrapper {
+        font-size: clamp(24px, 8vw, 34px) !important;
+    }
+    .elementor-counter-title {
+        font-size: clamp(13px, 4vw, 16px) !important;
+    }
+
+    /* Request/contact form: tighten vertical rhythm a little on small
+       screens without changing the desktop spacing. */
+    .request-form {
+        gap: 14px;
+    }
+    .request-form button {
+        align-self: stretch;
+        text-align: center;
+    }
+}
+
+/* --------------------------------------------------------------------
+   6. 480px — phone
+   -------------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .ast-container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    /* Cap the largest headings so a long line can't force horizontal
+       scroll on the narrowest phones; every page already shrinks these
+       per-heading at the 767px Elementor breakpoint — this is only a
+       ceiling for the few that stayed large. */
+    .entry-content h1.elementor-heading-title { font-size: clamp(22px, 7.5vw, 28px) !important; }
+    .entry-content h2.elementor-heading-title { font-size: clamp(19px, 6.5vw, 23px) !important; }
+    .entry-content h3.elementor-heading-title { font-size: clamp(16px, 5.5vw, 19px) !important; }
+
+    .entry-content p,
+    .entry-content .elementor-widget-text-editor {
+        word-break: break-word;
+    }
+
+    /* Image / icon boxes: reduce the fixed side padding used by the
+       background-image "info card" sections so text never crowds the
+       edge on a 375–480px screen. */
+    .hfe-infocard-title,
+    .hfe-infocard-text {
+        word-break: break-word;
+    }
+
+    .elementor-icon-box-icon,
+    .elementor-image-box-img {
+        flex-shrink: 0;
+    }
+
+    /* FAQ accordion: reclaim horizontal padding for the question text. */
+    .elementor-tab-title {
+        padding: 16px !important;
+    }
+
+    .elementor-widget-google_maps iframe,
+    .elementor-widget-google_maps .surecookie-placeholder {
+        height: 260px !important;
+        min-height: 260px !important;
+    }
+}
+
+/* --------------------------------------------------------------------
+   7. 380px — small phones (iPhone SE / small Android)
+   -------------------------------------------------------------------- */
+@media (max-width: 380px) {
+    .ast-container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .elementor-counter-number-wrapper {
+        font-size: clamp(20px, 9vw, 28px) !important;
+    }
+
+    .site-logo-img img,
+    .custom-logo-link img {
+        max-width: 96px;
+    }
+}

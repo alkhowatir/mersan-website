@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /includes/
+Disallow: /data/
+
+Sitemap: https://skilledcart.com/sitemap.xml

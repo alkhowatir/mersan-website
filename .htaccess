@@ -1,0 +1,55 @@
+# ------------------------------------------------------------------
+# العربة الماهرة - standalone PHP site (no WordPress dependency)
+# ------------------------------------------------------------------
+
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
+
+# Serve /sitemap.xml from sitemap.php while keeping the public URL clean
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# Custom error page
+ErrorDocument 404 /404.php
+
+# Never allow direct access to app internals (they're only ever `include`d)
+<FilesMatch "^(header-markup|footer-markup)\.php$">
+    Require all denied
+</FilesMatch>
+RewriteRule ^includes/ - [F,L]
+RewriteRule ^data/ - [F,L]
+
+# Prevent PHP execution inside the asset/vendor tree (static files only)
+<IfModule mod_php.c>
+    <Directory "assets">
+        php_flag engine off
+    </Directory>
+</IfModule>
+
+# Directory listing off
+Options -Indexes
+
+# Basic security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Caching for static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
