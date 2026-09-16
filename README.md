@@ -3,6 +3,17 @@
 Converted from WordPress (Astra + Elementor + Elementor Pro) to plain PHP.
 No WordPress core, no plugins, no database required.
 
+## Local development
+
+Run the site from the repository root with the development router:
+
+```powershell
+php -S 127.0.0.1:8000 tools/dev-router.php
+```
+
+The router serves the existing page directories and static assets, maps
+`/sitemap.xml` to `sitemap.php`, and uses the site's existing `404.php` page.
+
 ## Deploy
 
 1. Upload the entire contents of this folder to `public_html` (or your web root).

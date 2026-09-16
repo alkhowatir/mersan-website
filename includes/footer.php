@@ -9,6 +9,15 @@
 <script src="/assets/vendor/wp-includes/js/jquery/jquery.min.js"></script>
 <script src="/assets/vendor/wp-includes/js/jquery/jquery-migrate.min.js"></script>
 <script src="/assets/vendor/plugins/elementor/assets/lib/font-awesome/js/v4-shims.min.js"></script>
+<script>
+var astra = {
+    "break_point": "921",
+    "isRtl": "1",
+    "is_scroll_to_id": "",
+    "is_header_footer_builder_active": "1",
+    "responsive_cart_click": "flyout"
+};
+</script>
 <script src="/assets/vendor/themes/astra/assets/js/minified/frontend.min.js"></script>
 <script src="/assets/vendor/plugins/elementor/assets/js/webpack.runtime.min.js"></script>
 <script src="/assets/vendor/plugins/elementor/assets/js/frontend-modules.min.js"></script>
@@ -22,7 +31,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false},"i18n":{"shareOn
 <?php if ($page_slug === 'projects'): ?>
 <script src="/assets/vendor/plugins/elementor/assets/lib/swiper/v8/swiper.min.js"></script>
 <?php endif; ?>
-<script src="/assets/vendor/plugins/surecookie/build/public.js"></script>
 <script src="/assets/vendor/plugins/elementor-pro/assets/js/webpack-pro.runtime.min.js"></script>
 <script>
 var ElementorProFrontendConfig = {"urls":{"assets":"/assets/vendor/plugins/elementor-pro/assets/"},"settings":{"lazy_load_background_images":true},"popup":{"hasPopUps":false}};
@@ -95,5 +103,6 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener( 'DOMContentLoaded', lazyloadRunObserver );
 } )();
 </script>
+<script src="/assets/js/site-polish.js"></script>
 </body>
 </html>

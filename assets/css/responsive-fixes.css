@@ -6,10 +6,10 @@
    touching any of the vendor files.
 
    Scope / intent:
-   - Desktop (>1024px) is left as-is. Every rule below either only fires
-     inside a max-width media query, or is a value-preserving safety net
-     (max-width:100% on media, overflow guards) that is a no-op at desktop
-     sizes because nothing there is currently overflowing its box.
+   - Desktop (>1024px) keeps the existing design, with only the original
+     Astra 1240px/1200px outer/inner content frame restored. Other rules
+     either fire inside a max-width query or are value-preserving safety
+     nets (media max-width and overflow guards).
    - Breakpoints are chosen from how the actual sections break, not copied
      from Elementor's editor breakpoints (1024 / 767):
        1024px – large tablet / small laptop
@@ -37,6 +37,17 @@ img, svg, video, iframe, embed, object, canvas {
     max-width: 100%;
 }
 img { height: auto; }
+
+/* Restore Astra's normal desktop content frame. The page-builder template
+   otherwise changes the outer content container to 100% width. */
+@media (min-width: 1025px) {
+    .ast-page-builder-template .site-content > .ast-container {
+        max-width: 1240px;
+        margin-inline: auto;
+        padding-inline: 20px;
+        box-sizing: border-box;
+    }
+}
 
 /* Elementor / Astra containers: never let an inner box force the page wider. */
 .ast-container,
@@ -137,13 +148,6 @@ textarea:focus-visible,
         box-sizing: border-box;
     }
 
-    /* Belt-and-braces: if any Elementor row is still marked to keep its
-       row direction at this width, let it wrap instead of squeezing
-       columns into unreadable slivers. */
-    .e-con.e-flex {
-        flex-wrap: wrap;
-    }
-
     .elementor-image-carousel-wrapper,
     .elementor-image-carousel-wrapper .swiper-wrapper {
         max-width: 100%;
@@ -166,6 +170,25 @@ textarea:focus-visible,
     .elementor-icon-box-wrapper,
     .hfe-infocard {
         word-break: break-word;
+    }
+
+    /* Keep mobile/tablet components on the Arabic inline axis without
+       overriding sections that are intentionally centered. */
+    .ast-mobile-header-content,
+    .ast-mobile-header-content .main-header-menu,
+    .elementor-image-box-wrapper,
+    .elementor-icon-box-wrapper,
+    .elementor-icon-list-item,
+    .elementor-button-content-wrapper,
+    .request-form {
+        direction: rtl;
+    }
+
+    .ast-mobile-header-content .menu-link,
+    .request-form input,
+    .request-form textarea,
+    .elementor-15 .elementor-image-box-wrapper {
+        text-align: right;
     }
 
     /* Google map embed: fixed 475px desktop height is too tall relative
@@ -299,5 +322,483 @@ textarea:focus-visible,
     .site-logo-img img,
     .custom-logo-link img {
         max-width: 96px;
+    }
+}
+
+/* ==========================================================================
+   Visual polish layer
+   --------------------------------------------------------------------------
+   Shape system: 22px section/panel corners, 16px cards, 12px controls.
+   Motion system: 150ms feedback, 220ms menus, 580ms one-time reveals.
+   The existing navy/coral brand palette remains unchanged.
+   ========================================================================== */
+
+:root {
+    --sc-navy: #212d45;
+    --sc-coral: #d97d68;
+    --sc-surface: #ffffff;
+    --sc-surface-soft: #f6f7f9;
+    --sc-border: rgba(33, 45, 69, 0.12);
+    --sc-shadow: 0 18px 48px rgba(33, 45, 69, 0.10);
+    --sc-shadow-soft: 0 10px 30px rgba(33, 45, 69, 0.08);
+    --sc-radius-section: 22px;
+    --sc-radius-card: 16px;
+    --sc-radius-control: 12px;
+    --sc-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --sc-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+body {
+    background: var(--sc-surface-soft);
+    color: var(--sc-navy);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+.site-content > .ast-container {
+    background: var(--sc-surface);
+}
+
+#masthead .ast-site-identity {
+    padding-block: 7px;
+}
+
+#masthead .site-logo-img img,
+#masthead .custom-logo-link img {
+    width: auto;
+    max-width: 78px;
+    max-height: 50px;
+    object-fit: contain;
+}
+
+.entry-content > .elementor > .e-con:first-child {
+    overflow: hidden;
+    border-radius: var(--sc-radius-section);
+}
+
+.entry-content p {
+    line-height: 1.85;
+}
+
+/* Header: a single-line floating navigation surface on desktop. */
+@media (min-width: 922px) {
+    #ast-desktop-header .ast-primary-header-bar {
+        width: min(calc(100% - 40px), 1160px);
+        min-height: 68px;
+        margin: 16px auto 0;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 18px;
+        background: rgba(24, 35, 54, 0.30);
+        box-shadow: 0 12px 34px rgba(20, 30, 48, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+        -webkit-backdrop-filter: blur(16px) saturate(135%);
+        backdrop-filter: blur(16px) saturate(135%);
+    }
+
+    #ast-desktop-header .site-primary-header-wrap {
+        min-height: 68px;
+        padding-inline: 18px;
+    }
+
+    #ast-desktop-header .main-header-menu {
+        align-items: center;
+        gap: 4px;
+        flex-wrap: nowrap;
+    }
+
+    #ast-desktop-header .main-header-menu > .menu-item > .menu-link {
+        min-height: auto;
+        padding: 12px 16px;
+        border-radius: var(--sc-radius-control);
+        line-height: 1.15;
+        white-space: nowrap;
+        transition: color 150ms ease, background-color 150ms ease, transform 150ms var(--sc-ease-out);
+    }
+
+    #ast-desktop-header .main-header-menu > .current-menu-item > .menu-link {
+        color: #f1a18e;
+        background: rgba(217, 125, 104, 0.16);
+    }
+
+    #ast-desktop-header .ast-builder-social-element {
+        width: 38px;
+        height: 38px;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        border-radius: 11px;
+        background: rgba(255, 255, 255, 0.08);
+        color: #f1a18e !important;
+        transition: background-color 150ms ease, border-color 150ms ease, transform 150ms var(--sc-ease-out);
+    }
+
+}
+
+/* Mobile header and menu: compact floating surfaces instead of a full white slab. */
+@media (max-width: 921.99px) {
+    .ast-mobile-header-wrap .ast-primary-header-bar {
+        min-height: 62px;
+        margin: 12px;
+        padding-inline: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        border-radius: 17px;
+        background: rgba(24, 35, 54, 0.28);
+        box-shadow: 0 10px 28px rgba(20, 30, 48, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+        -webkit-backdrop-filter: blur(15px) saturate(135%);
+        backdrop-filter: blur(15px) saturate(135%);
+    }
+
+    .ast-mobile-header-wrap .menu-toggle.main-header-menu-toggle {
+        border: 1px solid rgba(217, 125, 104, 0.46);
+        border-radius: var(--sc-radius-control);
+        background: rgba(255, 255, 255, 0.10);
+        color: var(--sc-coral);
+        transition: background-color 150ms ease, border-color 150ms ease, transform 150ms var(--sc-ease-out);
+    }
+
+    .ast-mobile-header-wrap .site-logo-img img,
+    .ast-mobile-header-wrap .custom-logo-link img {
+        max-width: 72px;
+        max-height: 48px;
+    }
+
+    .ast-mobile-header-content {
+        margin: 0 12px;
+        padding: 8px;
+        border: 1px solid var(--sc-border);
+        border-radius: 17px;
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: var(--sc-shadow);
+        -webkit-backdrop-filter: blur(18px) saturate(125%);
+        backdrop-filter: blur(18px) saturate(125%);
+        transform-origin: top center;
+    }
+
+    .ast-mobile-header-content .main-header-menu {
+        gap: 4px;
+        padding: 0;
+    }
+
+    .ast-mobile-header-content .main-header-menu > .menu-item > .menu-link {
+        min-height: 46px;
+        padding: 12px 14px;
+        border: 0;
+        border-radius: var(--sc-radius-control);
+        color: var(--sc-navy);
+        transition: color 150ms ease, background-color 150ms ease, transform 150ms var(--sc-ease-out);
+    }
+
+    .ast-mobile-header-content .main-header-menu > .current-menu-item > .menu-link {
+        color: var(--sc-navy);
+        background: rgba(217, 125, 104, 0.14);
+    }
+}
+
+/* Buttons and links: tactile feedback without changing the brand colors. */
+.elementor-button,
+.request-form button,
+.surecookie-placeholder-button {
+    border-radius: var(--sc-radius-control) !important;
+    box-shadow: 0 8px 22px rgba(33, 45, 69, 0.10);
+    transition: transform 150ms var(--sc-ease-out), box-shadow 150ms ease, background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.elementor-button:active,
+.request-form button:active,
+.menu-toggle:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+/* Service cards: one consistent soft container and contained photography. */
+.elementor-308 .elementor-widget-image-box > .elementor-widget-container,
+.elementor-310 .elementor-widget-image-box > .elementor-widget-container {
+    height: 100%;
+}
+
+.elementor-308 .elementor-image-box-wrapper,
+.elementor-310 .elementor-image-box-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    border: 1px solid var(--sc-border);
+    border-radius: var(--sc-radius-card);
+    background: var(--sc-surface);
+    box-shadow: var(--sc-shadow-soft);
+    transition: transform 220ms var(--sc-ease-out), box-shadow 220ms ease, border-color 220ms ease;
+}
+
+.elementor-308 .elementor-image-box-img,
+.elementor-310 .elementor-image-box-img {
+    width: 100% !important;
+    margin: 0 !important;
+    overflow: hidden;
+}
+
+.elementor-308 .elementor-image-box-img img,
+.elementor-310 .elementor-image-box-img img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 38 / 25;
+    object-fit: cover;
+    transition: transform 480ms var(--sc-ease-out);
+}
+
+.elementor-308 .elementor-image-box-content,
+.elementor-310 .elementor-image-box-content {
+    padding: 18px 18px 20px;
+}
+
+.elementor-308 .elementor-image-box-title,
+.elementor-310 .elementor-image-box-title {
+    margin-bottom: 8px;
+}
+
+.elementor-308 .elementor-image-box-description,
+.elementor-310 .elementor-image-box-description {
+    color: rgba(33, 45, 69, 0.78);
+}
+
+.elementor-308 .elementor-element-d6d6973,
+.elementor-308 .elementor-element-847a90d,
+.elementor-310 .elementor-element-c605f92,
+.elementor-310 .elementor-element-6d29d9d {
+    gap: 18px;
+}
+
+.elementor-308 .elementor-element-d6d6973 > .e-con,
+.elementor-308 .elementor-element-847a90d > .e-con,
+.elementor-310 .elementor-element-c605f92 > .e-con,
+.elementor-310 .elementor-element-6d29d9d > .e-con {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+/* Stats, icon groups and fleet images get the same corner language. */
+.elementor-counter,
+.elementor-widget-icon-box > .elementor-widget-container {
+    border-radius: var(--sc-radius-card);
+    transition: transform 220ms var(--sc-ease-out), box-shadow 220ms ease;
+}
+
+.elementor-308 .e-con:has(> .elementor-widget-hfe-infocard),
+.elementor-309 .e-con:has(> .elementor-widget-hfe-infocard) {
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: var(--sc-radius-card);
+    box-shadow: var(--sc-shadow-soft);
+    transition: transform 220ms var(--sc-ease-out), box-shadow 220ms ease;
+}
+
+.elementor-widget-hfe-infocard .hfe-infocard {
+    min-height: 100%;
+}
+
+/* FAQ: separated soft rows with a clear active state. */
+.elementor-accordion {
+    display: grid;
+    gap: 10px;
+}
+
+.elementor-accordion .elementor-accordion-item {
+    overflow: hidden;
+    border: 1px solid var(--sc-border) !important;
+    border-radius: 14px;
+    background: var(--sc-surface);
+    box-shadow: 0 6px 18px rgba(33, 45, 69, 0.05);
+}
+
+.elementor-accordion .elementor-tab-title {
+    border: 0 !important;
+    transition: color 180ms ease, background-color 180ms ease;
+}
+
+.elementor-accordion .elementor-tab-title.elementor-active {
+    color: var(--sc-navy);
+    background: rgba(217, 125, 104, 0.11);
+}
+
+.elementor-accordion .elementor-tab-content {
+    border: 0 !important;
+    background: #fbfcfd;
+}
+
+.elementor-accordion .elementor-tab-content[style*="display: block"] {
+    animation: sc-faq-enter 220ms var(--sc-ease-out) both;
+}
+
+/* Contact and request surfaces. */
+.elementor-element-7671b54,
+.elementor-15 .elementor-element-cde39a1 {
+    overflow: hidden;
+    border-radius: var(--sc-radius-section);
+    box-shadow: var(--sc-shadow-soft);
+}
+
+.elementor-widget-google_maps .elementor-custom-embed,
+.elementor-widget-google_maps iframe {
+    overflow: hidden;
+    border-radius: var(--sc-radius-card);
+}
+
+.elementor-15 .elementor-element-90f4e8a .elementor-image-box-wrapper {
+    padding: 14px 16px;
+    border: 1px solid var(--sc-border);
+    border-radius: var(--sc-radius-control);
+    background: rgba(255, 255, 255, 0.72);
+}
+
+/* Footer follows the same panel geometry as the rest of the page. */
+.site-footer {
+    overflow: hidden;
+    margin-top: 24px;
+    border-radius: var(--sc-radius-section) var(--sc-radius-section) 0 0;
+}
+
+/* Viewport reveal classes are attached by site-polish.js. */
+.sc-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 580ms var(--sc-ease-out) var(--sc-delay, 0ms), transform 580ms var(--sc-ease-out) var(--sc-delay, 0ms);
+}
+
+.sc-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes sc-header-enter {
+    from { opacity: 0; transform: translateY(-14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sc-hero-enter {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sc-menu-enter {
+    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes sc-faq-enter {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    #masthead .ast-primary-header-bar {
+        animation: sc-header-enter 520ms var(--sc-ease-out) both;
+    }
+
+    .entry-content > .elementor > .e-con:first-child .elementor-widget-heading,
+    .entry-content > .elementor > .e-con:first-child .elementor-widget-text-editor,
+    .entry-content > .elementor > .e-con:first-child .elementor-widget-button {
+        animation: sc-hero-enter 680ms var(--sc-ease-out) both;
+    }
+
+    .entry-content > .elementor > .e-con:first-child .elementor-widget-text-editor {
+        animation-delay: 70ms;
+    }
+
+    .entry-content > .elementor > .e-con:first-child .elementor-widget-button {
+        animation-delay: 140ms;
+    }
+
+    .ast-mobile-header-content[style*="display: block"] {
+        animation: sc-menu-enter 220ms var(--sc-ease-out) both;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #ast-desktop-header .main-header-menu > .menu-item > .menu-link:hover,
+    .ast-mobile-header-content .main-header-menu > .menu-item > .menu-link:hover {
+        background: rgba(217, 125, 104, 0.15);
+        transform: translateY(-1px);
+    }
+
+    #ast-desktop-header .ast-builder-social-element:hover {
+        border-color: rgba(217, 125, 104, 0.56);
+        background: rgba(217, 125, 104, 0.16);
+        transform: translateY(-2px);
+    }
+
+    .elementor-button:hover,
+    .request-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(33, 45, 69, 0.16);
+    }
+
+    .elementor-308 .elementor-image-box-wrapper:hover,
+    .elementor-310 .elementor-image-box-wrapper:hover {
+        border-color: rgba(217, 125, 104, 0.38);
+        box-shadow: 0 18px 38px rgba(33, 45, 69, 0.13);
+        transform: translateY(-5px);
+    }
+
+    .elementor-308 .elementor-image-box-wrapper:hover img,
+    .elementor-310 .elementor-image-box-wrapper:hover img {
+        transform: scale(1.035);
+    }
+
+    .elementor-308 .e-con:has(> .elementor-widget-hfe-infocard):hover,
+    .elementor-309 .e-con:has(> .elementor-widget-hfe-infocard):hover,
+    .elementor-widget-icon-box > .elementor-widget-container:hover {
+        box-shadow: 0 18px 38px rgba(33, 45, 69, 0.13);
+        transform: translateY(-4px);
+    }
+}
+
+@media (max-width: 767px) {
+    .entry-content > .elementor > .e-con:first-child {
+        border-radius: 0 0 18px 18px;
+    }
+
+    .elementor-308 .elementor-element-d6d6973,
+    .elementor-308 .elementor-element-847a90d,
+    .elementor-310 .elementor-element-c605f92,
+    .elementor-310 .elementor-element-6d29d9d {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+
+    .elementor-308 .elementor-element-d6d6973 > .e-con,
+    .elementor-308 .elementor-element-847a90d > .e-con,
+    .elementor-310 .elementor-element-c605f92 > .e-con,
+    .elementor-310 .elementor-element-6d29d9d > .e-con {
+        width: 100%;
+        max-width: 100%;
+        flex: 1 1 auto;
+    }
+
+    .elementor-308 .elementor-image-box-content,
+    .elementor-310 .elementor-image-box-content {
+        padding: 16px 16px 18px;
+    }
+
+    .elementor-element-7671b54,
+    .elementor-15 .elementor-element-cde39a1 {
+        border-radius: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+    }
+
+    .sc-reveal,
+    .sc-reveal.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: opacity 150ms ease;
+    }
+
+    #masthead .ast-primary-header-bar,
+    .entry-content > .elementor > .e-con:first-child .elementor-widget,
+    .elementor-accordion .elementor-tab-content {
+        animation: none !important;
     }
 }

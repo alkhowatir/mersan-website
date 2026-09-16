@@ -50,7 +50,7 @@
 <div class="elementor-element elementor-element-1d89e36 elementor-widget elementor-widget-google_maps" data-e-type="widget" data-element_type="widget" data-id="1d89e36" data-widget_type="google_maps.default">
 <div class="elementor-widget-container">
 <div class="elementor-custom-embed">
-<div class="surecookie-placeholder surecookie-placeholder-google-maps" data-surecookie-category="marketing" data-surecookie-name="google-maps" style="width:100%;min-height:160px;"><div class="surecookie-placeholder-content"><p class="surecookie-placeholder-text">تم حظر هذا المحتوى لأنه يتطلب ملفات تعريف ارتباط Google Maps.</p><button aria-label="قبول وتحميل محتوى Google Maps" class="surecookie-placeholder-button" data-surecookie-category="marketing" type="button">قبول وتحميل</button></div><iframe aria-label="MV38+84C، السلي، الرياض 14276" data-surecookie-category="marketing" data-surecookie-name="google-maps" data-surecookie-src="https://maps.google.com/maps?q=MV38%2B84C%D8%8C%20%D8%A7%D9%84%D8%B3%D9%84%D9%8A%D8%8C%20%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6%2014276&amp;t=m&amp;z=17&amp;output=embed&amp;iwloc=near" loading="lazy" style="display:none;" title="MV38+84C، السلي، الرياض 14276"></iframe></div>
+<iframe aria-label="العربة الماهرة، MV38+84C، السلي، الرياض 14276" loading="eager" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=24.6533125%2C46.8653125&amp;z=17&amp;output=embed" title="العربة الماهرة، MV38+84C، السلي، الرياض 14276"></iframe>
 </div>
 </div>
 </div>
