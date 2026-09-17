@@ -27,7 +27,7 @@
 </div>
 <div class="elementor-element elementor-element-35ebd54 elementor-widget elementor-widget-text-editor" data-e-type="widget" data-element_type="widget" data-id="35ebd54" data-settings='{"_animation":"fadeIn"}' data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
-<p class="PDq2pG_selectionAnchorContainer" data-end="459" data-start="225" style="direction: ltr;">العربة الماهرة شركة متخصصة في حلول عربات الجولف، تقدم خدمات البيع والتأجير والتشغيل والصيانة. نوفر عربات جولف كهربائية وبنزين، جديدة ومستعملة، لتناسب طبيعة الاستخدام في الأندية الرياضية والمنتجعات والملاعب والمواقع التجارية. نعمل على تقديم حلول عملية وموثوقة، مع الاهتمام بجودة العربة وكفاءة الأداء.</p> </div>
+<p>العربة الماهرة شركة متخصصة في حلول عربات الجولف، تقدم خدمات البيع والتأجير والتشغيل والصيانة. نوفر عربات جولف كهربائية وبنزين، جديدة ومستعملة، لتناسب طبيعة الاستخدام في الأندية الرياضية والمنتجعات والملاعب والمواقع التجارية. نعمل على تقديم حلول عملية وموثوقة، مع الاهتمام بجودة العربة وكفاءة الأداء.</p> </div>
 </div>
 <div class="elementor-element elementor-element-d455eb2 elementor-align-right elementor-widget elementor-widget-button" data-e-type="widget" data-element_type="widget" data-id="d455eb2" data-settings='{"_animation":"fadeIn"}' data-widget_type="button.default">
 <div class="elementor-widget-container">
@@ -114,7 +114,7 @@
 </div>
 <div class="elementor-element elementor-element-094c92d elementor-widget elementor-widget-text-editor" data-e-type="widget" data-element_type="widget" data-id="094c92d" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
-<p class="PDq2pG_selectionAnchorContainer" data-end="443" data-start="327">نحرص على توفير عربات وخدمات موثوقة، مع الاهتمام بجودة الأداء والعناية بالعربة في مختلف مراحل استخدامها.</p> </div>
+<p>نحرص على توفير عربات وخدمات موثوقة، مع الاهتمام بجودة الأداء والعناية بالعربة في مختلف مراحل استخدامها.</p> </div>
 </div>
 </div>
 </div>
@@ -128,7 +128,7 @@
 </div>
 <div class="elementor-element elementor-element-365ddc7 elementor-widget elementor-widget-text-editor" data-e-type="widget" data-element_type="widget" data-id="365ddc7" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
-<p class="PDq2pG_selectionAnchorContainer" data-end="324" data-start="206">نركز على جودة العربات، دقة الخدمة، وجاهزية الحلول المقدمة بما يتناسب مع طبيعة الاستخدام ومتطلبات كل موقع.</p> </div>
+<p>نركز على جودة العربات، دقة الخدمة، وجاهزية الحلول المقدمة بما يتناسب مع طبيعة الاستخدام ومتطلبات كل موقع.</p> </div>
 </div>
 <div class="elementor-element elementor-element-36cf656 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-e-type="widget" data-element_type="widget" data-id="36cf656" data-widget_type="icon-list.default">
 <div class="elementor-widget-container">

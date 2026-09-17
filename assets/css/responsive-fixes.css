@@ -49,6 +49,22 @@ img { height: auto; }
     }
 }
 
+/* Desktop edge-to-edge: on viewports wider than the 1240px boxed frame
+   above, the page's soft-gray body background shows as a gutter on both
+   sides, and the hero's rounded top corners expose the same background in
+   the corners. Go full-bleed instead — mobile/tablet are untouched. */
+@media (min-width: 1025px) {
+    .ast-page-builder-template .site-content > .ast-container {
+        max-width: 100%;
+        margin-inline: 0;
+        padding-inline: 0;
+    }
+
+    .entry-content > .elementor > .e-con:first-child {
+        border-radius: 0;
+    }
+}
+
 /* Elementor / Astra containers: never let an inner box force the page wider. */
 .ast-container,
 .e-con,
@@ -366,8 +382,8 @@ body {
 #masthead .site-logo-img img,
 #masthead .custom-logo-link img {
     width: auto;
-    max-width: 78px;
-    max-height: 50px;
+    max-width: 150px;
+    max-height: 46px;
     object-fit: contain;
 }
 
@@ -456,8 +472,8 @@ body {
 
     .ast-mobile-header-wrap .site-logo-img img,
     .ast-mobile-header-wrap .custom-logo-link img {
-        max-width: 72px;
-        max-height: 48px;
+        max-width: 130px;
+        max-height: 42px;
     }
 
     .ast-mobile-header-content {
@@ -489,6 +505,19 @@ body {
     .ast-mobile-header-content .main-header-menu > .current-menu-item > .menu-link {
         color: var(--sc-navy);
         background: rgba(217, 125, 104, 0.14);
+    }
+}
+
+/* Sub-page heroes (about/services/contact): the floating mobile navbar is
+   ~76px tall (12px margin + 62px bar). Elementor's own mobile padding-top
+   for these hero containers is only 100px, leaving barely any air between
+   the navbar and the title. Add clearance on phones only; tablet (150px)
+   and desktop (250px) already clear it comfortably. */
+@media (max-width: 767px) {
+    .elementor-311 .elementor-element.elementor-element-19b8c8c,   /* about */
+    .elementor-310 .elementor-element.elementor-element-122e55f,   /* services */
+    .elementor-15 .elementor-element.elementor-element-9731434 {   /* contact */
+        --padding-top: 130px;
     }
 }
 
@@ -637,6 +666,17 @@ body {
 .elementor-widget-google_maps iframe {
     overflow: hidden;
     border-radius: var(--sc-radius-card);
+}
+
+/* The contact page's map iframe ships with a baked-in grayscale filter
+   (saturate(0%)) from the original Elementor "CSS Filters" setting. */
+.elementor-15 .elementor-element.elementor-element-1d89e36 iframe {
+    filter: none;
+}
+
+.elementor-15 .elementor-image-box-title,
+.elementor-15 .elementor-image-box-description {
+    unicode-bidi: plaintext;
 }
 
 .elementor-15 .elementor-element-90f4e8a .elementor-image-box-wrapper {
