@@ -12,7 +12,6 @@ $d = site_data();
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="https://gmpg.org/xfn/11">
 <?php render_seo($page_slug); ?>
 
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
@@ -58,7 +57,6 @@ $d = site_data();
 <script>
 (function(){if(window.matchMedia('(max-width:921.99px)').matches){document.body.classList.add('ast-header-break-point');document.body.classList.remove('ast-desktop');}})();
 </script>
-<div id="surecookie-public-root"></div>
 <a class="skip-link screen-reader-text" href="#content">تخطي إلى المحتوى</a>
 <div class="hfeed site" id="page">
 <?php include __DIR__ . '/header-markup.php'; ?>

@@ -1,6 +1,10 @@
 <?php
 $request_form_sent   = false;
 $request_form_errors = [];
+$name    = '';
+$email   = '';
+$people  = '';
+$message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_form_submit'])) {
     // Honeypot: real users never fill this hidden field.
@@ -36,6 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_form_submit']
 
             @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers);
             $request_form_sent = true;
+            // Clear on success so the redisplayed form doesn't look like it re-submitted.
+            $name = $email = $people = $message = '';
         }
     }
 }
@@ -78,19 +84,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_form_submit']
     <input aria-hidden="true" class="rf-hp" type="text" name="website" tabindex="-1" autocomplete="off">
     <label class="rf-field">
         <span>الاسم</span>
-        <input type="text" name="name" placeholder="اكتب اسمك" autocomplete="name" required>
+        <input type="text" name="name" placeholder="اكتب اسمك" autocomplete="name" value="<?= h($name) ?>" required>
     </label>
     <label class="rf-field">
         <span>البريد الإلكتروني</span>
-        <input type="email" name="email" placeholder="name@example.com" autocomplete="email" required>
+        <input type="email" name="email" placeholder="name@example.com" autocomplete="email" value="<?= h($email) ?>" required>
     </label>
     <label class="rf-field rf-field--full">
         <span>عدد الأشخاص <small>(اختياري)</small></span>
-        <input type="text" name="people" placeholder="مثال: 6" inputmode="numeric">
+        <input type="text" name="people" placeholder="مثال: 6" inputmode="numeric" value="<?= h($people) ?>">
     </label>
     <label class="rf-field rf-field--full">
         <span>تفاصيل الطلب</span>
-        <textarea name="message" placeholder="اكتب تفاصيل العربة أو الخدمة المطلوبة" required></textarea>
+        <textarea name="message" placeholder="اكتب تفاصيل العربة أو الخدمة المطلوبة" required><?= h($message) ?></textarea>
     </label>
     <button type="submit" name="request_form_submit" value="1">إرسال</button>
 </form>

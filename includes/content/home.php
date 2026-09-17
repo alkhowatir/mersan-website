@@ -17,7 +17,7 @@
 </div>
 <div class="elementor-element elementor-element-7eaab47 elementor-widget__width-initial elementor-widget elementor-widget-text-editor" data-e-type="widget" data-element_type="widget" data-id="7eaab47" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
-<p class="PDq2pG_selectionAnchorContainer" data-end="655" data-start="511">نقدم خدمات متكاملة في بيع وتأجير وتشغيل وصيانة عربات الجولف، مع خيارات متنوعة من العربات الكهربائية والبنزين لتلبية مختلف الاحتياجات.</p> </div>
+<p>نقدم خدمات متكاملة في بيع وتأجير وتشغيل وصيانة عربات الجولف، مع خيارات متنوعة من العربات الكهربائية والبنزين لتلبية مختلف الاحتياجات.</p> </div>
 </div>
 <div class="elementor-element elementor-element-62f6d51 e-con-full e-flex e-con e-child" data-e-type="container" data-element_type="container" data-id="62f6d51">
 <div class="elementor-element elementor-element-59f1388 e-con-full e-flex e-con e-child" data-e-type="container" data-element_type="container" data-id="59f1388" data-settings='{"background_background":"classic"}'>
@@ -240,7 +240,7 @@
 </div>
 <div class="elementor-element elementor-element-3b5a0d1 elementor-widget elementor-widget-text-editor" data-e-type="widget" data-element_type="widget" data-id="3b5a0d1" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
-<p class="PDq2pG_selectionAnchorContainer" data-end="420" data-start="273">نوفر مجموعة متنوعة من عربات الجولف الكهربائية والبنزين، بتصاميم عملية تلائم الاستخدام في المنتجعات والملاعب والمرافق والمواقع التجارية.</p> </div>
+<p>نوفر مجموعة متنوعة من عربات الجولف الكهربائية والبنزين، بتصاميم عملية تلائم الاستخدام في المنتجعات والملاعب والمرافق والمواقع التجارية.</p> </div>
 </div>
 <div class="elementor-element elementor-element-f493cf0 elementor-widget elementor-widget-button" data-e-type="widget" data-element_type="widget" data-id="f493cf0" data-widget_type="button.default">
 <div class="elementor-widget-container">
@@ -265,7 +265,7 @@
 </div>
 <div class="elementor-element elementor-element-97a9e3b elementor-widget elementor-widget-text-editor" data-e-type="widget" data-element_type="widget" data-id="97a9e3b" data-widget_type="text-editor.default">
 <div class="elementor-widget-container">
-<p class="PDq2pG_selectionAnchorContainer" data-end="2628" data-start="2499">نقدم حلولًا متكاملة لعربات الجولف، مع الاهتمام بجودة المنتجات وتنوع الخيارات والخدمات التي تلبي احتياجات مختلف العملاء.</p> </div>
+<p>نقدم حلولًا متكاملة لعربات الجولف، مع الاهتمام بجودة المنتجات وتنوع الخيارات والخدمات التي تلبي احتياجات مختلف العملاء.</p> </div>
 </div>
 <div class="elementor-element elementor-element-007db15 elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-e-type="widget" data-element_type="widget" data-id="007db15" data-widget_type="icon-list.default">
 <div class="elementor-widget-container">
