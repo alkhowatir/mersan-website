@@ -37,9 +37,7 @@
 </div>
 <div class="elementor-element elementor-element-d359d2b elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-e-type="widget" data-element_type="widget" data-id="d359d2b" data-widget_type="image-box.default">
 <div class="elementor-widget-container">
-<div class="elementor-image-box-wrapper"><div class="elementor-image-box-content"><h4 class="elementor-image-box-title">رقم الهاتف :</h4><p class="elementor-image-box-description">966546196801+
-
-</p></div></div> </div>
+<div class="elementor-image-box-wrapper"><div class="elementor-image-box-content"><h4 class="elementor-image-box-title">رقم الهاتف :</h4><p class="elementor-image-box-description"><bdi class="sc-ltr-num">+966546196801</bdi></p></div></div> </div>
 </div>
 <div class="elementor-element elementor-element-1746dc9 elementor-vertical-align-top elementor-widget elementor-widget-image-box" data-e-type="widget" data-element_type="widget" data-id="1746dc9" data-widget_type="image-box.default">
 <div class="elementor-widget-container">
