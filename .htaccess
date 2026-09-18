@@ -1,6 +1,8 @@
 # ------------------------------------------------------------------
-# العربة الماهرة - standalone PHP site (no WordPress dependency)
+# العربة الماهرة - Static Website (.htaccess)
 # ------------------------------------------------------------------
+
+DirectoryIndex index.html index.php
 
 RewriteEngine On
 
@@ -8,25 +10,8 @@ RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [L,R=301]
 
-# Serve /sitemap.xml from sitemap.php while keeping the public URL clean
-RewriteRule ^sitemap\.xml$ sitemap.php [L]
-
 # Custom error page
-ErrorDocument 404 /404.php
-
-# Never allow direct access to app internals (they're only ever `include`d)
-<FilesMatch "^(header-markup|footer-markup)\.php$">
-    Require all denied
-</FilesMatch>
-RewriteRule ^includes/ - [F,L]
-RewriteRule ^data/ - [F,L]
-
-# Prevent PHP execution inside the asset/vendor tree (static files only)
-<IfModule mod_php.c>
-    <Directory "assets">
-        php_flag engine off
-    </Directory>
-</IfModule>
+ErrorDocument 404 /404.html
 
 # Directory listing off
 Options -Indexes

@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /includes/
-Disallow: /data/
+Disallow: /_legacy_php/
 
 Sitemap: https://skilledcart.com/sitemap.xml
