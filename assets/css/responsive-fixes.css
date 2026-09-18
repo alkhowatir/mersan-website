@@ -59,10 +59,6 @@ img { height: auto; }
         margin-inline: 0;
         padding-inline: 0;
     }
-
-    .entry-content > .elementor > .e-con:first-child {
-        border-radius: 0;
-    }
 }
 
 /* Elementor / Astra containers: never let an inner box force the page wider. */
@@ -392,6 +388,19 @@ body {
     border-radius: var(--sc-radius-section);
 }
 
+/* Desktop hero/header: the rule above gives every page's first section soft
+   corners project-wide, which is right for mobile/tablet (and is what the
+   767px rule further down repeats for that range). On desktop the same
+   radius exposed the page background as visible wedges in the corners once
+   the hero goes full-bleed above - go rectangular there instead. This must
+   stay below the rule above in the file (equal selector specificity, later
+   wins) so it actually overrides it at desktop widths. */
+@media (min-width: 1025px) {
+    .entry-content > .elementor > .e-con:first-child {
+        border-radius: 0;
+    }
+}
+
 .entry-content p {
     line-height: 1.85;
 }
@@ -435,15 +444,13 @@ body {
         background: rgba(217, 125, 104, 0.16);
     }
 
+    /* Icons keep their natural size and get breathing room via margin
+       instead of being boxed into fixed-size bordered tiles, which read
+       as cramped next to the nav links. */
     #ast-desktop-header .ast-builder-social-element {
-        width: 38px;
-        height: 38px;
-        justify-content: center;
-        border: 1px solid rgba(255, 255, 255, 0.20);
-        border-radius: 11px;
-        background: rgba(255, 255, 255, 0.08);
+        margin-inline: 10px;
         color: #f1a18e !important;
-        transition: background-color 150ms ease, border-color 150ms ease, transform 150ms var(--sc-ease-out);
+        transition: color 150ms ease, opacity 150ms ease, transform 150ms var(--sc-ease-out);
     }
 
 }
@@ -519,6 +526,33 @@ body {
     .elementor-15 .elementor-element.elementor-element-9731434 {   /* contact */
         --padding-top: 130px;
     }
+}
+
+/* Home hero: the light-colored supporting paragraph sits over a busy photo
+   background. Keep the photo as-is and lift the text with a shadow instead
+   of adding a heavier overlay across the whole hero. */
+.elementor-308 .elementor-element-7eaab47 {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55), 0 3px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Hero eyebrow tag ("العربة الماهرة"): coral text with no backing plate read
+   poorly against the busy hero photo. Give it a solid pill so it stays
+   legible, keeping its existing inline position and roughly its size. */
+.elementor-308 .elementor-element-d6211bd .elementor-heading-title {
+    display: inline-block;
+    padding: 5px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 4px 14px rgba(33, 45, 69, 0.14);
+}
+
+/* Hero secondary CTA ("تواصل معنا"): the outlined white-on-transparent
+   treatment lost contrast against the photo background. Give it a solid
+   fill by default; the existing coral hover state is untouched. */
+.elementor-308 .elementor-element.elementor-element-7114e20 .elementor-button {
+    background-color: #ffffff;
+    color: var(--sc-navy);
+    border-color: #ffffff;
 }
 
 /* Buttons and links: tactile feedback without changing the brand colors. */
@@ -621,6 +655,24 @@ body {
     min-height: 100%;
 }
 
+/* Home page "اكتشف عرباتنا" cart cards, right above the FAQ section: on
+   tablet/mobile Elementor's own per-breakpoint settings already show three
+   distinct cart photos (07 and 01 below, plus the unmodified default for the
+   8-seater card). Desktop had no such override, so it fell back to showing
+   the same default image on all three cards. Match the working mobile
+   behavior on desktop too. */
+@media (min-width: 1025px) {
+    .elementor-308 .elementor-element.elementor-element-c64f23c:not(.elementor-motion-effects-element-type-background),
+    .elementor-308 .elementor-element.elementor-element-c64f23c > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+        background-image: url("/assets/images/motion-bg-07.png");
+    }
+
+    .elementor-308 .elementor-element.elementor-element-0126050:not(.elementor-motion-effects-element-type-background),
+    .elementor-308 .elementor-element.elementor-element-0126050 > .elementor-motion-effects-container > .elementor-motion-effects-layer {
+        background-image: url("/assets/images/motion-bg-01.png");
+    }
+}
+
 /* FAQ: separated soft rows with a clear active state. */
 .elementor-accordion {
     display: grid;
@@ -674,9 +726,22 @@ body {
     filter: none;
 }
 
-.elementor-15 .elementor-image-box-title,
-.elementor-15 .elementor-image-box-description {
-    unicode-bidi: plaintext;
+/* Contact page info cards (address / phone / email): these sit in the
+   page's normal RTL flow, so no bidi override is needed here - the plain
+   `plaintext` rule this replaced let entries with no strong-RTL character
+   (the phone number card) resolve their own paragraph direction instead of
+   inheriting the page's RTL, which is what pushed the label, colon and
+   number out of their intended positions on narrower layouts. The one
+   value that genuinely needs isolating (the phone number itself) gets a
+   scoped .sc-ltr-num class instead - see below. */
+
+/* Numeric strings that must always read left-to-right (phone numbers, etc.)
+   even while sitting inside RTL Arabic text - isolated at the component
+   level, on just the value itself, rather than a global bidi rule. */
+.sc-ltr-num {
+    unicode-bidi: isolate;
+    direction: ltr;
+    display: inline-block;
 }
 
 .elementor-15 .elementor-element-90f4e8a .elementor-image-box-wrapper {
@@ -757,8 +822,8 @@ body {
     }
 
     #ast-desktop-header .ast-builder-social-element:hover {
-        border-color: rgba(217, 125, 104, 0.56);
-        background: rgba(217, 125, 104, 0.16);
+        color: #ffffff !important;
+        opacity: 0.85;
         transform: translateY(-2px);
     }
 

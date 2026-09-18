@@ -23,7 +23,7 @@
 </section><section class="widget widget_block" id="block-17">
 <ul class="wp-block-list has-white-color has-text-color has-link-color wp-elements-5">
 <li>info@skilledcart.com</li>
-<li>966546196801+</li>
+<li><bdi class="sc-ltr-num">+966546196801</bdi></li>
 </ul>
 </section><section class="widget widget_block widget_text" id="block-16">
 <p class="has-white-color has-text-color has-link-color wp-elements-6 wp-block-paragraph"></p>
