@@ -980,18 +980,30 @@ button, input, textarea, select {
     display: none;
 }
 
-.rf-notice.success {
+.rf-notice[hidden] {
+    display: none !important;
+}
+
+.rf-notice.is-visible {
     display: block;
+}
+
+.rf-notice.success {
     background: #e6f4ea;
     color: #1e4620;
     border: 1px solid #c2e7c9;
 }
 
 .rf-notice.error {
-    display: block;
     background: #fdecea;
     color: #611a15;
     border: 1px solid #fad2cf;
+}
+
+.rf-field input[aria-invalid="true"],
+.rf-field textarea[aria-invalid="true"] {
+    border-color: #d93025;
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.2);
 }
 
 /* --------------------------------------------------------------------------

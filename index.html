@@ -384,9 +384,9 @@
                 <p class="section-desc" style="color: rgba(255, 255, 255, 0.85);">هل تبحث عن عربة جولف أو خدمة تناسب احتياجك؟ شاركنا تفاصيل احتياجك، وسنتواصل معك لمساعدتك في اختيار الخدمة أو العربة المناسبة.</p>
             </div>
 
-            <form class="request-form" id="request-form">
-                <div class="rf-notice success" id="rf-notice-success">تم استلام طلبك بنجاح، سنتواصل معك قريبًا.</div>
-                <div class="rf-notice error" id="rf-notice-error">الرجاء تعبئة جميع الحقول المطلوبة.</div>
+            <form class="request-form" id="request-form" novalidate>
+                <div class="rf-notice success" id="rf-notice-success" role="status" aria-live="polite" hidden>تم استلام طلبك بنجاح، سنتواصل معك قريبًا.</div>
+                <div class="rf-notice error" id="rf-notice-error" role="alert" aria-live="assertive" hidden>الرجاء تعبئة جميع الحقول المطلوبة.</div>
 
                 <label class="rf-field">
                     <span>الاسم</span>

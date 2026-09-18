@@ -91,29 +91,105 @@ document.addEventListener('DOMContentLoaded', () => {
     const noticeError = document.getElementById('rf-notice-error');
 
     if (requestForm) {
+        const nameInput = requestForm.querySelector('[name="name"]');
+        const emailInput = requestForm.querySelector('[name="email"]');
+        const peopleInput = requestForm.querySelector('[name="people"]');
+        const messageInput = requestForm.querySelector('[name="message"]');
+
+        const showNotice = (el) => {
+            if (!el) return;
+            el.removeAttribute('hidden');
+            el.classList.add('is-visible');
+            el.style.display = 'block';
+        };
+
+        const hideNotice = (el) => {
+            if (!el) return;
+            el.setAttribute('hidden', '');
+            el.classList.remove('is-visible');
+            el.style.display = 'none';
+        };
+
+        // Guarantee both notices are completely hidden on initial load
+        hideNotice(noticeSuccess);
+        hideNotice(noticeError);
+
+        // Real-time clearance of invalid markers when user types
+        [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
+            if (!input) return;
+            input.addEventListener('input', () => {
+                input.removeAttribute('aria-invalid');
+                // Hide the error message once user starts typing/correcting
+                if (noticeError && noticeError.classList.contains('is-visible')) {
+                    hideNotice(noticeError);
+                }
+            });
+        });
+
+        const isValidEmail = (email) => {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        };
+
         requestForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const name = (requestForm.querySelector('[name="name"]')?.value || '').trim();
-            const email = (requestForm.querySelector('[name="email"]')?.value || '').trim();
-            const people = (requestForm.querySelector('[name="people"]')?.value || '').trim();
-            const message = (requestForm.querySelector('[name="message"]')?.value || '').trim();
+            const name = (nameInput?.value || '').trim();
+            const email = (emailInput?.value || '').trim();
+            const people = (peopleInput?.value || '').trim();
+            const message = (messageInput?.value || '').trim();
 
-            if (!name || !email || !message) {
+            let firstInvalidInput = null;
+            let errorMessage = '';
+
+            // Validate name
+            if (!name) {
+                nameInput?.setAttribute('aria-invalid', 'true');
+                if (!firstInvalidInput) firstInvalidInput = nameInput;
+                errorMessage = 'الرجاء تعبئة جميع الحقول المطلوبة.';
+            } else {
+                nameInput?.removeAttribute('aria-invalid');
+            }
+
+            // Validate email
+            if (!email) {
+                emailInput?.setAttribute('aria-invalid', 'true');
+                if (!firstInvalidInput) firstInvalidInput = emailInput;
+                if (!errorMessage) errorMessage = 'الرجاء تعبئة جميع الحقول المطلوبة.';
+            } else if (!isValidEmail(email)) {
+                emailInput?.setAttribute('aria-invalid', 'true');
+                if (!firstInvalidInput) firstInvalidInput = emailInput;
+                if (!errorMessage) errorMessage = 'الرجاء إدخال بريد إلكتروني صحيح.';
+            } else {
+                emailInput?.removeAttribute('aria-invalid');
+            }
+
+            // Validate message
+            if (!message) {
+                messageInput?.setAttribute('aria-invalid', 'true');
+                if (!firstInvalidInput) firstInvalidInput = messageInput;
+                if (!errorMessage) errorMessage = 'الرجاء تعبئة جميع الحقول المطلوبة.';
+            } else {
+                messageInput?.removeAttribute('aria-invalid');
+            }
+
+            // If any error occurred, show only error notice and focus first invalid input
+            if (errorMessage) {
+                hideNotice(noticeSuccess);
                 if (noticeError) {
-                    noticeError.textContent = 'الرجاء تعبئة جميع الحقول المطلوبة.';
-                    noticeError.style.display = 'block';
+                    noticeError.textContent = errorMessage;
+                    showNotice(noticeError);
+                    noticeError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
-                if (noticeSuccess) noticeSuccess.style.display = 'none';
+                if (firstInvalidInput) {
+                    firstInvalidInput.focus();
+                }
                 return;
             }
 
-            // Hide error notice if visible
-            if (noticeError) noticeError.style.display = 'none';
-
-            // Show success notice
+            // Submission is valid: show only green success notice
+            hideNotice(noticeError);
             if (noticeSuccess) {
-                noticeSuccess.style.display = 'block';
+                showNotice(noticeSuccess);
                 noticeSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
 
@@ -125,6 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Reset form fields
             requestForm.reset();
+            [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
+                input?.removeAttribute('aria-invalid');
+            });
 
             // Offer sending via WhatsApp if user wants immediate response
             console.log('Form submission prepared for WhatsApp:', waText);
