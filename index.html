@@ -385,27 +385,33 @@
             </div>
 
             <form class="request-form" id="request-form" novalidate>
+                <!-- Web3Forms configuration -->
+                <input type="hidden" name="access_key" value="6636c2ea-271b-4c48-a3db-f11909e3f934">
+                <input type="hidden" name="subject" value="طلب خدمة جديد — العربة الماهرة">
+                <input type="hidden" name="from_name" value="العربة الماهرة — نموذج طلب الخدمة">
+                <input type="checkbox" name="botcheck" style="display: none;">
+
                 <div class="rf-notice success" id="rf-notice-success" role="status" aria-live="polite" hidden>تم استلام طلبك بنجاح، سنتواصل معك قريبًا.</div>
                 <div class="rf-notice error" id="rf-notice-error" role="alert" aria-live="assertive" hidden>الرجاء تعبئة جميع الحقول المطلوبة.</div>
 
                 <label class="rf-field">
                     <span>الاسم</span>
-                    <input type="text" name="name" placeholder="اكتب اسمك" autocomplete="name" required>
+                    <input type="text" name="name" placeholder="اكتب اسمك" autocomplete="name" maxlength="120" required>
                 </label>
 
                 <label class="rf-field">
                     <span>البريد الإلكتروني</span>
-                    <input type="email" name="email" placeholder="name@example.com" autocomplete="email" required>
+                    <input type="email" name="email" placeholder="name@example.com" autocomplete="email" maxlength="190" required>
                 </label>
 
                 <label class="rf-field rf-field--full">
                     <span>عدد الأشخاص <small style="font-weight: 400; opacity: 0.8;">(اختياري)</small></span>
-                    <input type="text" name="people" placeholder="مثال: 6" inputmode="numeric">
+                    <input type="text" name="people" placeholder="مثال: 6" inputmode="numeric" maxlength="20">
                 </label>
 
                 <label class="rf-field rf-field--full">
                     <span>تفاصيل الطلب</span>
-                    <textarea name="message" placeholder="اكتب تفاصيل العربة أو الخدمة المطلوبة" required></textarea>
+                    <textarea name="message" placeholder="اكتب تفاصيل العربة أو الخدمة المطلوبة" maxlength="2000" required></textarea>
                 </label>
 
                 <div class="rf-actions">

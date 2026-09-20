@@ -84,17 +84,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // -------------------------------------------------------------------------
-    // 3. Service Request Form Handler
+    // 3. Service Request Form Handler (Web3Forms API)
     // -------------------------------------------------------------------------
-    const requestForm = document.getElementById('request-form');
-    const noticeSuccess = document.getElementById('rf-notice-success');
-    const noticeError = document.getElementById('rf-notice-error');
+    // Works for both homepage (#request-form) and contact page (#contact-request-form)
+    const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+    const REQUEST_TIMEOUT_MS = 15000; // 15-second timeout
 
-    if (requestForm) {
-        const nameInput = requestForm.querySelector('[name="name"]');
-        const emailInput = requestForm.querySelector('[name="email"]');
-        const peopleInput = requestForm.querySelector('[name="people"]');
-        const messageInput = requestForm.querySelector('[name="message"]');
+    /**
+     * Initialize a form with validation and Web3Forms submission.
+     * @param {string} formId        — The form element ID
+     * @param {string} successId     — The success notice element ID
+     * @param {string} errorId       — The error notice element ID
+     */
+    function initRequestForm(formId, successId, errorId) {
+        const form = document.getElementById(formId);
+        const noticeSuccess = document.getElementById(successId);
+        const noticeError = document.getElementById(errorId);
+
+        if (!form) return;
+
+        const nameInput = form.querySelector('[name="name"]');
+        const emailInput = form.querySelector('[name="email"]');
+        const peopleInput = form.querySelector('[name="people"]');
+        const messageInput = form.querySelector('[name="message"]');
+        const submitBtn = form.querySelector('[type="submit"]');
+
+        // Double-submit guard
+        let isSubmitting = false;
 
         const showNotice = (el) => {
             if (!el) return;
@@ -110,16 +126,24 @@ document.addEventListener('DOMContentLoaded', () => {
             el.style.display = 'none';
         };
 
+        const showError = (msg) => {
+            hideNotice(noticeSuccess);
+            if (noticeError) {
+                noticeError.textContent = msg;
+                showNotice(noticeError);
+                noticeError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        };
+
         // Guarantee both notices are completely hidden on initial load
         hideNotice(noticeSuccess);
         hideNotice(noticeError);
 
-        // Real-time clearance of invalid markers when user types
+        // Clear invalid markers as the user corrects a field
         [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
             if (!input) return;
             input.addEventListener('input', () => {
                 input.removeAttribute('aria-invalid');
-                // Hide the error message once user starts typing/correcting
                 if (noticeError && noticeError.classList.contains('is-visible')) {
                     hideNotice(noticeError);
                 }
@@ -130,8 +154,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         };
 
-        requestForm.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Double-submit guard: block overlapping requests
+            if (isSubmitting) return;
 
             const name = (nameInput?.value || '').trim();
             const email = (emailInput?.value || '').trim();
@@ -174,41 +201,92 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // If any error occurred, show only error notice and focus first invalid input
             if (errorMessage) {
-                hideNotice(noticeSuccess);
-                if (noticeError) {
-                    noticeError.textContent = errorMessage;
-                    showNotice(noticeError);
-                    noticeError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }
+                showError(errorMessage);
                 if (firstInvalidInput) {
                     firstInvalidInput.focus();
                 }
                 return;
             }
 
-            // Submission is valid: show only green success notice
+            // --- Send via Web3Forms API ---
             hideNotice(noticeError);
-            if (noticeSuccess) {
-                showNotice(noticeSuccess);
-                noticeSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            hideNotice(noticeSuccess);
+            isSubmitting = true;
+
+            // Show loading state on button
+            const originalBtnText = submitBtn?.textContent;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'جاري الإرسال...';
             }
 
-            // Optional direct WhatsApp shortcut for instant communication
-            const whatsappNumber = '966546196801';
-            let waText = `طلب خدمة من الموقع:\n- الاسم: ${name}\n- البريد: ${email}`;
-            if (people) waText += `\n- عدد الأشخاص: ${people}`;
-            waText += `\n- التفاصيل: ${message}`;
+            // Timeout controller
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
-            // Reset form fields
-            requestForm.reset();
-            [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
-                input?.removeAttribute('aria-invalid');
-            });
+            try {
+                const formData = new FormData(form);
+                const payload = Object.fromEntries(formData);
 
-            // Offer sending via WhatsApp if user wants immediate response
-            console.log('Form submission prepared for WhatsApp:', waText);
+                const response = await fetch(WEB3FORMS_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // Success
+                    showNotice(noticeSuccess);
+                    noticeSuccess?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                    // Reset form fields
+                    form.reset();
+                    [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
+                        input?.removeAttribute('aria-invalid');
+                    });
+                } else {
+                    const apiMessage = result?.message || result?.body?.message;
+                    const errorMessage = apiMessage
+                        ? `تعذر إرسال الطلب: ${apiMessage}`
+                        : 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.';
+
+                    console.error('Web3Forms submission failed:', response.status, result);
+                    showError(errorMessage);
+                }
+            } catch (err) {
+                clearTimeout(timeoutId);
+
+                if (err.name === 'AbortError') {
+                    // Request timed out
+                    showError('انتهت مهلة الإرسال. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.');
+                } else {
+                    // Network / fetch error
+                    showError('حدث خطأ في الاتصال. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.');
+                }
+                console.error('Form submission error:', err);
+            } finally {
+                // Restore button state
+                isSubmitting = false;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                }
+            }
         });
     }
+
+    // Initialize homepage form
+    initRequestForm('request-form', 'rf-notice-success', 'rf-notice-error');
+
+    // Initialize contact page form
+    initRequestForm('contact-request-form', 'crf-notice-success', 'crf-notice-error');
 
     // -------------------------------------------------------------------------
     // 4. Partner Logos Continuous Marquee / Interaction
