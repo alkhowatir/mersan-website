@@ -252,8 +252,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         input?.removeAttribute('aria-invalid');
                     });
                 } else {
-                    // API returned an error — map to Arabic
-                    showError('حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.');
+                    const apiMessage = result?.message || result?.body?.message;
+                    const errorMessage = apiMessage
+                        ? `تعذر إرسال الطلب: ${apiMessage}`
+                        : 'حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.';
+
+                    console.error('Web3Forms submission failed:', response.status, result);
+                    showError(errorMessage);
                 }
             } catch (err) {
                 clearTimeout(timeoutId);
