@@ -1370,38 +1370,16 @@ button, input, textarea, select {
         padding: 60px 0;
     }
 
-    /* 1. Mobile Fix: Homepage hero & stats section overlap */
     .hero-section {
-        min-height: auto;
+        min-height: 640px;
         padding-top: 130px;
-        padding-bottom: 50px;
-    }
-
-    .stats-section {
-        margin-top: 24px;
-        margin-bottom: 40px;
-    }
-
-    /* 2. Mobile Fix: Sub-page hero/banner navigation menu overlap */
-    body.page-subpage .site-header,
-    body:has(.page-hero) .site-header,
-    body:has(.error-404-box) .site-header {
-        position: relative;
-        background-color: var(--color-navy-dark);
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    body.page-subpage .header-bar,
-    body:has(.page-hero) .header-bar,
-    body:has(.error-404-box) .header-bar {
-        margin: 0 auto;
+        padding-bottom: 80px;
     }
 
     .page-hero {
-        min-height: 180px;
-        padding-top: 45px;
-        padding-bottom: 45px;
+        min-height: 280px;
+        padding-top: 140px;
+        padding-bottom: 50px;
     }
 
     .two-col-grid {
@@ -1460,12 +1438,6 @@ button, input, textarea, select {
         margin: 8px auto 0;
     }
 
-    body.page-subpage .header-bar,
-    body:has(.page-hero) .header-bar,
-    body:has(.error-404-box) .header-bar {
-        margin: 0 auto;
-    }
-
     .header-brand img {
         max-width: 120px;
         height: 36px;
@@ -1483,4 +1455,74 @@ button, input, textarea, select {
         flex-direction: column;
     }
 }
+
+/* --------------------------------------------------------------------------
+   Normal Portrait Mobile View
+   Specifically for smartphones in portrait orientation.
+   Does not affect desktop, tablet, or landscape layouts.
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) and (orientation: portrait), (max-width: 480px) {
+    /* Sticky mobile navigation menu */
+    .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        pointer-events: none;
+    }
+
+    .header-bar {
+        pointer-events: auto;
+        width: calc(100% - 16px);
+        margin: 0 auto;
+        background: rgba(24, 35, 54, 0.92);
+        backdrop-filter: blur(20px) saturate(140%);
+        -webkit-backdrop-filter: blur(20px) saturate(140%);
+        box-shadow: 0 8px 30px rgba(10, 18, 32, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .mobile-menu-drawer {
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+    }
+
+    .section,
+    .request-section,
+    .stats-section {
+        scroll-margin-top: 80px;
+    }
+
+    /* 1. Homepage Hero Section:
+       Extend height so content displays naturally within the hero without compression */
+    .hero-section {
+        min-height: 720px;
+        padding-top: 140px;
+        padding-bottom: 80px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Move cards/section further down so there is clear separation between hero and cards */
+    .stats-section {
+        margin-top: 32px;
+        margin-bottom: 45px;
+    }
+
+    /* 2. Sub-pages Hero / Banner:
+       Increase height on portrait mobile so floating navigation and banner content
+       have ample space and the section looks properly proportioned */
+    .page-hero {
+        min-height: 350px;
+        padding-top: 155px;
+        padding-bottom: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
 
