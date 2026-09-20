@@ -1370,16 +1370,38 @@ button, input, textarea, select {
         padding: 60px 0;
     }
 
+    /* 1. Mobile Fix: Homepage hero & stats section overlap */
     .hero-section {
-        min-height: 640px;
+        min-height: auto;
         padding-top: 130px;
-        padding-bottom: 80px;
+        padding-bottom: 50px;
+    }
+
+    .stats-section {
+        margin-top: 24px;
+        margin-bottom: 40px;
+    }
+
+    /* 2. Mobile Fix: Sub-page hero/banner navigation menu overlap */
+    body.page-subpage .site-header,
+    body:has(.page-hero) .site-header,
+    body:has(.error-404-box) .site-header {
+        position: relative;
+        background-color: var(--color-navy-dark);
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    body.page-subpage .header-bar,
+    body:has(.page-hero) .header-bar,
+    body:has(.error-404-box) .header-bar {
+        margin: 0 auto;
     }
 
     .page-hero {
-        min-height: 280px;
-        padding-top: 140px;
-        padding-bottom: 50px;
+        min-height: 180px;
+        padding-top: 45px;
+        padding-bottom: 45px;
     }
 
     .two-col-grid {
@@ -1438,6 +1460,12 @@ button, input, textarea, select {
         margin: 8px auto 0;
     }
 
+    body.page-subpage .header-bar,
+    body:has(.page-hero) .header-bar,
+    body:has(.error-404-box) .header-bar {
+        margin: 0 auto;
+    }
+
     .header-brand img {
         max-width: 120px;
         height: 36px;
@@ -1455,3 +1483,4 @@ button, input, textarea, select {
         flex-direction: column;
     }
 }
+
