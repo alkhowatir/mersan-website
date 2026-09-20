@@ -194,6 +194,54 @@
         </div>
     </section>
 
+    <!-- Request Form Section -->
+    <div class="container">
+        <div class="request-section">
+            <div class="section-header text-center" style="margin-bottom: 24px;">
+                <h2 class="section-title" style="color: #ffffff;">تواصل معنا</h2>
+                <p class="section-desc" style="color: rgba(255, 255, 255, 0.85);">هل تبحث عن عربة جولف أو خدمة تناسب احتياجك؟ شاركنا تفاصيل احتياجك، وسنتواصل معك لمساعدتك في اختيار الخدمة أو العربة المناسبة.</p>
+            </div>
+
+            <form class="request-form" id="contact-request-form" novalidate>
+                <!-- Web3Forms configuration -->
+                <input type="hidden" name="access_key" value="4e315641-7e98-46e4-8f76-d1de17c2efb6">
+                <input type="hidden" name="subject" value="رسالة تواصل جديدة — العربة الماهرة">
+                <input type="hidden" name="from_name" value="العربة الماهرة — نموذج تواصل معنا">
+                <input type="hidden" name="botcheck" value="">
+
+                <div class="rf-notice success" id="crf-notice-success" role="status" aria-live="polite" hidden>تم استلام طلبك بنجاح، سنتواصل معك قريبًا.</div>
+                <div class="rf-notice error" id="crf-notice-error" role="alert" aria-live="assertive" hidden>الرجاء تعبئة جميع الحقول المطلوبة.</div>
+
+                <label class="rf-field">
+                    <span>الاسم</span>
+                    <input type="text" name="name" placeholder="اكتب اسمك" autocomplete="name" maxlength="120" required>
+                </label>
+
+                <label class="rf-field">
+                    <span>البريد الإلكتروني</span>
+                    <input type="email" name="email" placeholder="name@example.com" autocomplete="email" maxlength="190" required>
+                </label>
+
+                <label class="rf-field rf-field--full">
+                    <span>عدد الأشخاص <small style="font-weight: 400; opacity: 0.8;">(اختياري)</small></span>
+                    <input type="text" name="people" placeholder="مثال: 6" inputmode="numeric" maxlength="20">
+                </label>
+
+                <label class="rf-field rf-field--full">
+                    <span>تفاصيل الطلب</span>
+                    <textarea name="message" placeholder="اكتب تفاصيل العربة أو الخدمة المطلوبة" maxlength="2000" required></textarea>
+                </label>
+
+                <div class="rf-actions">
+                    <button type="submit" class="btn btn-primary" style="border: none;">إرسال الطلب</button>
+                    <a href="https://wa.me/966546196801" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        <i class="fab fa-whatsapp" style="color: #25d366; font-size: 1.2rem;"></i> تواصل مباشر عبر واتساب
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Site Footer -->
     <footer class="site-footer" id="colophon">
         <div class="container">
