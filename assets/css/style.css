@@ -1,36 +1,36 @@
 /* ==========================================================================
-   العربة الماهرة (Skilled Cart) — Modern Static Stylesheet
-   Brand Theme: Navy (#212d45) & Coral (#d97d68)
+   مرسان المرافق (Mursan Facilities) — Modern Static Stylesheet
+   Brand Theme: Deep Teal (#102e38) & Copper (#c77e4e)
    ========================================================================== */
 
 :root {
-    --color-primary: #d97d68;
-    --color-primary-hover: #c46853;
-    --color-primary-soft: rgba(217, 125, 104, 0.14);
-    --color-primary-border: rgba(217, 125, 104, 0.35);
+    --color-primary: #c77e4e;
+    --color-primary-hover: #a96336;
+    --color-primary-soft: rgba(199, 126, 78, 0.14);
+    --color-primary-border: rgba(199, 126, 78, 0.35);
 
-    --color-navy: #212d45;
-    --color-navy-dark: #1b2437;
-    --color-navy-light: #2b3956;
-    --color-navy-soft: rgba(33, 45, 69, 0.08);
+    --color-navy: #102e38;
+    --color-navy-dark: #0b2129;
+    --color-navy-light: #234750;
+    --color-navy-soft: rgba(16, 46, 56, 0.08);
 
     --color-surface: #ffffff;
-    --color-surface-soft: #f8f9fa;
+    --color-surface-soft: #f5f3ec;
     --color-surface-card: #ffffff;
-    --color-surface-tint: #f2f4f8;
+    --color-surface-tint: #dce8df;
 
-    --color-text: #212d45;
-    --color-text-dark: #1b2437;
-    --color-text-muted: #687386;
+    --color-text: #102e38;
+    --color-text-dark: #0b2129;
+    --color-text-muted: #64777a;
     --color-text-light: #ffffff;
     --color-text-light-muted: rgba(255, 255, 255, 0.82);
 
-    --color-border: rgba(33, 45, 69, 0.12);
+    --color-border: #dce4df;
     --color-border-light: rgba(255, 255, 255, 0.18);
 
-    --shadow-sm: 0 4px 12px rgba(33, 45, 69, 0.06);
-    --shadow-md: 0 10px 30px rgba(33, 45, 69, 0.08);
-    --shadow-lg: 0 18px 48px rgba(33, 45, 69, 0.12);
+    --shadow-sm: 0 4px 12px rgba(16, 46, 56, 0.06);
+    --shadow-md: 0 10px 30px rgba(16, 46, 56, 0.08);
+    --shadow-lg: 0 18px 48px rgba(16, 46, 56, 0.12);
 
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -38,8 +38,8 @@
     --radius-xl: 22px;
     --radius-full: 9999px;
 
-    --font-arabic: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    --font-heading: "Cairo", sans-serif;
+    --font-arabic: "Tahoma", "Arial", sans-serif;
+    --font-heading: "Tahoma", "Arial", sans-serif;
 
     --container-width: 1200px;
     --transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
@@ -124,6 +124,8 @@ button, input, textarea, select {
 }
 
 .header-bar {
+    position: relative;
+    z-index: 1001;
     width: min(calc(100% - 40px), 1160px);
     margin: 0 auto;
     min-height: 68px;
@@ -131,20 +133,60 @@ button, input, textarea, select {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(24, 35, 54, 0.35);
+    background: rgba(16, 46, 56, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 18px;
     backdrop-filter: blur(16px) saturate(135%);
     -webkit-backdrop-filter: blur(16px) saturate(135%);
-    box-shadow: 0 12px 34px rgba(20, 30, 48, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    box-shadow: 0 12px 34px rgba(11, 33, 41, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 .header-brand {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
-.header-brand img {
+.header-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 44px;
+    padding: 4px;
+    border-radius: 12px;
+    background: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(11, 33, 41, 0.14);
+}
+
+.header-brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.header-brand-text {
+    display: flex;
+    flex-direction: column;
+    color: #ffffff;
+    line-height: 1.25;
+}
+
+.header-brand-name {
+    font-size: 1.05rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.header-brand-sub {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.header-brand > img {
     height: 44px;
     width: auto;
     max-width: 160px;
@@ -169,13 +211,13 @@ button, input, textarea, select {
 }
 
 .nav-desktop .nav-link:hover {
-    color: #f1a18e;
+    color: #e4b98d;
     background: rgba(255, 255, 255, 0.08);
 }
 
 .nav-desktop .nav-link.active {
-    color: #f1a18e;
-    background: rgba(217, 125, 104, 0.18);
+    color: #e4b98d;
+    background: rgba(199, 126, 78, 0.2);
 }
 
 .header-social {
@@ -185,7 +227,7 @@ button, input, textarea, select {
 }
 
 .header-social a {
-    color: #f1a18e;
+    color: #e4b98d;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,7 +252,7 @@ button, input, textarea, select {
     display: none;
     width: 44px;
     height: 44px;
-    border: 1px solid rgba(217, 125, 104, 0.46);
+    border: 1px solid rgba(199, 126, 78, 0.46);
     border-radius: var(--radius-md);
     background: rgba(255, 255, 255, 0.1);
     color: var(--color-primary);
@@ -244,26 +286,24 @@ button, input, textarea, select {
     top: calc(100% + 8px);
     left: 20px;
     right: 20px;
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(18px) saturate(125%);
-    -webkit-backdrop-filter: blur(18px) saturate(125%);
+    background: #ffffff;
     border: 1px solid var(--color-border);
     border-radius: 17px;
     padding: 12px;
     box-shadow: var(--shadow-lg);
-    z-index: 1001;
+    z-index: 1002;
     flex-direction: column;
     gap: 6px;
 }
 
 .mobile-menu-drawer.open {
     display: flex;
-    animation: menuFadeIn 0.22s ease-out;
+    animation: menuFadeIn 0.16s ease-out;
 }
 
 @keyframes menuFadeIn {
-    from { opacity: 0; transform: translateY(-8px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0.92; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .mobile-menu-drawer .nav-link {
@@ -278,7 +318,7 @@ button, input, textarea, select {
 
 .mobile-menu-drawer .nav-link:hover,
 .mobile-menu-drawer .nav-link.active {
-    background: rgba(217, 125, 104, 0.14);
+    background: rgba(199, 126, 78, 0.14);
     color: var(--color-primary);
 }
 
@@ -326,7 +366,7 @@ button, input, textarea, select {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(27, 36, 55, 0.72) 0%, rgba(33, 45, 69, 0.88) 100%);
+    background: linear-gradient(180deg, rgba(11, 33, 41, 0.72) 0%, rgba(16, 46, 56, 0.88) 100%);
     z-index: 1;
 }
 
@@ -348,7 +388,7 @@ button, input, textarea, select {
     font-size: 0.95rem;
     font-weight: 700;
     margin-bottom: 18px;
-    box-shadow: 0 4px 14px rgba(33, 45, 69, 0.14);
+    box-shadow: 0 4px 14px rgba(16, 46, 56, 0.14);
 }
 
 .hero-title {
@@ -393,7 +433,7 @@ button, input, textarea, select {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(27, 36, 55, 0.76) 0%, rgba(33, 45, 69, 0.88) 100%);
+    background: linear-gradient(180deg, rgba(11, 33, 41, 0.76) 0%, rgba(16, 46, 56, 0.88) 100%);
     z-index: 1;
 }
 
@@ -428,13 +468,13 @@ button, input, textarea, select {
 .btn-primary {
     background-color: var(--color-primary);
     color: #ffffff;
-    box-shadow: 0 8px 22px rgba(217, 125, 104, 0.35);
+    box-shadow: 0 8px 22px rgba(199, 126, 78, 0.35);
 }
 
 .btn-primary:hover {
     background-color: var(--color-primary-hover);
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(217, 125, 104, 0.45);
+    box-shadow: 0 12px 28px rgba(199, 126, 78, 0.45);
 }
 
 .btn-secondary {
@@ -729,7 +769,7 @@ button, input, textarea, select {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(33, 45, 69, 0.85);
+    background: rgba(16, 46, 56, 0.85);
     z-index: 1;
 }
 
@@ -789,7 +829,7 @@ button, input, textarea, select {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(0deg, rgba(27, 36, 55, 0.92) 0%, rgba(27, 36, 55, 0.2) 60%, rgba(27, 36, 55, 0) 100%);
+    background: linear-gradient(0deg, rgba(11, 33, 41, 0.92) 0%, rgba(11, 33, 41, 0.2) 60%, rgba(11, 33, 41, 0) 100%);
     z-index: 1;
     transition: var(--transition);
 }
@@ -800,7 +840,7 @@ button, input, textarea, select {
 }
 
 .model-card:hover::before {
-    background: linear-gradient(0deg, rgba(217, 125, 104, 0.95) 0%, rgba(27, 36, 55, 0.3) 70%);
+    background: linear-gradient(0deg, rgba(199, 126, 78, 0.95) 0%, rgba(11, 33, 41, 0.3) 70%);
 }
 
 .model-card-content {
@@ -857,7 +897,7 @@ button, input, textarea, select {
 }
 
 .faq-item.active .faq-trigger {
-    background: rgba(217, 125, 104, 0.1);
+    background: rgba(199, 126, 78, 0.1);
     color: var(--color-navy);
 }
 
@@ -956,7 +996,7 @@ button, input, textarea, select {
 .rf-field input:focus,
 .rf-field textarea:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px rgba(217, 125, 104, 0.25);
+    box-shadow: 0 0 0 3px rgba(199, 126, 78, 0.25);
 }
 
 .rf-field textarea {
@@ -1033,7 +1073,7 @@ button, input, textarea, select {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(0deg, rgba(27, 36, 55, 0.95) 0%, rgba(27, 36, 55, 0.25) 60%, rgba(27, 36, 55, 0) 100%);
+    background: linear-gradient(0deg, rgba(11, 33, 41, 0.95) 0%, rgba(11, 33, 41, 0.25) 60%, rgba(11, 33, 41, 0) 100%);
     z-index: 1;
     transition: var(--transition);
 }
@@ -1044,7 +1084,7 @@ button, input, textarea, select {
 }
 
 .project-card:hover::before {
-    background: linear-gradient(0deg, rgba(217, 125, 104, 0.92) 0%, rgba(27, 36, 55, 0.4) 80%);
+    background: linear-gradient(0deg, rgba(199, 126, 78, 0.92) 0%, rgba(11, 33, 41, 0.4) 80%);
 }
 
 .project-card-content {
@@ -1147,6 +1187,7 @@ button, input, textarea, select {
     flex-shrink: 0;
 }
 
+.contact-info-text h3,
 .contact-info-text h4 {
     font-size: 1.05rem;
     font-weight: 700;
@@ -1171,6 +1212,67 @@ button, input, textarea, select {
     width: 100%;
     height: 450px;
     border: none;
+}
+
+.contact-approach-panel {
+    padding: 36px 32px;
+    background: linear-gradient(155deg, var(--color-navy) 0%, var(--color-navy-light) 100%);
+    color: #ffffff;
+}
+
+.contact-approach-panel h3 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.contact-approach-panel > p {
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.contact-steps-list {
+    display: grid;
+    gap: 16px;
+}
+
+.contact-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.contact-step-num {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--color-primary);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.contact-step-item h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #ffffff;
+}
+
+.contact-step-item p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
 }
 
 /* --------------------------------------------------------------------------
@@ -1422,6 +1524,10 @@ button, input, textarea, select {
         height: 320px;
     }
 
+    .contact-approach-panel {
+        padding: 26px 20px;
+    }
+
     .request-section {
         padding: 40px 20px;
         margin: 20px 12px;
@@ -1454,9 +1560,23 @@ button, input, textarea, select {
         margin: 8px auto 0;
     }
 
-    .header-brand img {
+    .header-brand > img {
         max-width: 120px;
         height: 36px;
+    }
+
+    .header-brand-mark {
+        width: 38px;
+        height: 36px;
+        border-radius: 10px;
+    }
+
+    .header-brand-name {
+        font-size: 0.95rem;
+    }
+
+    .header-brand-sub {
+        font-size: 0.65rem;
     }
 
     .stats-grid {
@@ -1494,10 +1614,10 @@ button, input, textarea, select {
         pointer-events: auto;
         width: calc(100% - 16px);
         margin: 0 auto;
-        background: rgba(24, 35, 54, 0.92);
+        background: rgba(16, 46, 56, 0.94);
         backdrop-filter: blur(20px) saturate(140%);
         -webkit-backdrop-filter: blur(20px) saturate(140%);
-        box-shadow: 0 8px 30px rgba(10, 18, 32, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 30px rgba(11, 33, 41, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18);
     }
 
     .mobile-menu-drawer {

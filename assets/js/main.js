@@ -1,5 +1,5 @@
 /**
- * Skilled Cart (العربة الماهرة) — Main JavaScript
+ * Mursan Facilities (مرسان المرافق) — Main JavaScript
  * Handles mobile navigation, FAQ accordion, request form, and interactions.
  */
 
@@ -105,8 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const nameInput = form.querySelector('[name="name"]');
         const emailInput = form.querySelector('[name="email"]');
-        const peopleInput = form.querySelector('[name="people"]');
+        const siteTypeInput = form.querySelector('[name="site_type"]');
         const messageInput = form.querySelector('[name="message"]');
+        const accessKeyInput = form.querySelector('[name="access_key"]');
         const submitBtn = form.querySelector('[type="submit"]');
 
         // Double-submit guard
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hideNotice(noticeError);
 
         // Clear invalid markers as the user corrects a field
-        [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
+        [nameInput, emailInput, siteTypeInput, messageInput].forEach(input => {
             if (!input) return;
             input.addEventListener('input', () => {
                 input.removeAttribute('aria-invalid');
@@ -162,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const name = (nameInput?.value || '').trim();
             const email = (emailInput?.value || '').trim();
-            const people = (peopleInput?.value || '').trim();
+            const siteType = (siteTypeInput?.value || '').trim();
             const message = (messageInput?.value || '').trim();
 
             let firstInvalidInput = null;
@@ -208,6 +209,46 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // If Web3Forms key is not yet provisioned, provide direct WhatsApp/Email dispatch
+            const accessKey = (accessKeyInput?.value || '').trim();
+            if (!accessKey || accessKey.startsWith('PENDING_')) {
+                const lines = [
+                    `طلب خدمة جديد — مرسان المرافق`,
+                    `الاسم: ${name}`,
+                    `البريد الإلكتروني: ${email}`,
+                    siteType ? `نوع الموقع أو المنشأة: ${siteType}` : null,
+                    `تفاصيل الطلب: ${message}`
+                ].filter(Boolean).join('\n');
+
+                const waUrl = `https://wa.me/966501654936?text=${encodeURIComponent(lines)}`;
+                const mailUrl = `mailto:Info@marsanfm.com?subject=${encodeURIComponent('طلب خدمة جديد — مرسان المرافق')}&body=${encodeURIComponent(lines)}`;
+
+                if (noticeSuccess) {
+                    noticeSuccess.innerHTML = '';
+                    const msgSpan = document.createElement('span');
+                    msgSpan.textContent = 'تم تجهيز بيانات طلبك بنجاح. أرسله مباشرة عبر ';
+                    const waLink = document.createElement('a');
+                    waLink.href = waUrl;
+                    waLink.target = '_blank';
+                    waLink.rel = 'noopener noreferrer';
+                    waLink.textContent = 'واتساب';
+                    waLink.style.textDecoration = 'underline';
+                    const sep = document.createTextNode(' أو ');
+                    const mailLink = document.createElement('a');
+                    mailLink.href = mailUrl;
+                    mailLink.textContent = 'البريد الإلكتروني';
+                    mailLink.style.textDecoration = 'underline';
+                    noticeSuccess.append(msgSpan, waLink, sep, mailLink, document.createTextNode('.'));
+                    showNotice(noticeSuccess);
+                    noticeSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+                form.reset();
+                [nameInput, emailInput, siteTypeInput, messageInput].forEach(input => {
+                    input?.removeAttribute('aria-invalid');
+                });
+                return;
+            }
+
             // --- Send via Web3Forms API ---
             hideNotice(noticeError);
             hideNotice(noticeSuccess);
@@ -248,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Reset form fields
                     form.reset();
-                    [nameInput, emailInput, peopleInput, messageInput].forEach(input => {
+                    [nameInput, emailInput, siteTypeInput, messageInput].forEach(input => {
                         input?.removeAttribute('aria-invalid');
                     });
                 } else {

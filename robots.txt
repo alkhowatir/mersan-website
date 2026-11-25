@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /_legacy_php/
+Allow: /
 
-Sitemap: https://skilledcart.com/sitemap.xml
+Sitemap: https://marsanfm.com/sitemap.xml
